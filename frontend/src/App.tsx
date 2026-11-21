@@ -547,11 +547,11 @@ export const App: React.FC = () => {
                 </div>
 
                 {/* Question 3 */}
-                <div className="rounded-lg border border-border bg-card p-5 flex flex-col justify-between hover:border-destructive/40 transition-colors">
+                <div className="rounded-lg border border-border bg-card p-5 flex flex-col justify-between hover:border-teal-400/40 transition-colors">
                   <div>
                     <div className="flex items-center justify-between text-xs font-mono text-muted-foreground mb-3">
-                      <span className="text-destructive font-semibold uppercase tracking-wider">03 · Spaceship Armor</span>
-                      <Layers className="size-4 text-destructive" />
+                      <span className="text-teal-400 font-semibold uppercase tracking-wider">03 · Spaceship Armor</span>
+                      <Layers className="size-4 text-teal-400" />
                     </div>
                     <h3 className="text-sm font-semibold text-foreground">
                       How thick should the storm shelter be?
