@@ -143,7 +143,7 @@ export const SpaceIntroAnimation: React.FC<SpaceIntroAnimationProps> = ({ onComp
       } else if (currentPct > 55 && currentPct <= 85) {
         setStatusText('CALIBRATING SPACECRAFT SHIELDING MODELS...');
       } else if (currentPct > 85) {
-        setStatusText('MISSION CONSOLE READY · ENTERING ORBIT');
+        setStatusText('SYSTEM READY · ENTERING ORBIT');
         setIsWarping(true);
       }
 
@@ -173,7 +173,7 @@ export const SpaceIntroAnimation: React.FC<SpaceIntroAnimationProps> = ({ onComp
       <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
         <div className="flex items-center gap-2.5 font-mono text-xs text-sky-400 font-semibold tracking-wider">
           <img src="/images/logo.png?v=3" alt="AstroShield Logo" className="size-6 object-contain drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]" />
-          <span>ASTROSHIELD · MISSION CONSOLE</span>
+          <span>ASTROSHIELD</span>
         </div>
         <button
           type="button"
