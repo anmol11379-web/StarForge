@@ -59,22 +59,22 @@ export const ShieldingComparison: React.FC = () => {
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data.datapoints} margin={{ top: 10, right: 20, left: -10, bottom: 15 }}>
+                <LineChart data={data.datapoints} margin={{ top: 10, right: 20, left: 10, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#242f3d" vertical={false} />
                   <XAxis
                     dataKey="areal_density"
-                    stroke="#9ca5b1"
+                    stroke="#94a3b8"
                     fontSize={11}
                     fontFamily="IBM Plex Mono"
                     tickLine={false}
-                    label={{ value: 'Wall thickness (g/cm²)', position: 'insideBottom', offset: -10, fill: '#9ca5b1', fontSize: 11 }}
+                    label={{ value: 'Wall thickness (g/cm²)', position: 'insideBottom', offset: -10, fill: '#f8fafc', fontSize: 12, fontWeight: 500 }}
                   />
                   <YAxis
-                    stroke="#9ca5b1"
+                    stroke="#94a3b8"
                     fontSize={11}
                     fontFamily="IBM Plex Mono"
                     tickLine={false}
-                    label={{ value: '180-Day Dose (mSv)', angle: -90, position: 'insideLeft', offset: 12, fill: '#9ca5b1', fontSize: 11 }}
+                    label={{ value: '180-Day Dose (mSv)', angle: -90, position: 'insideLeft', offset: 16, fill: '#f8fafc', fontSize: 12, fontWeight: 600 }}
                   />
                   <Tooltip
                     content={({ active, payload, label }) => {

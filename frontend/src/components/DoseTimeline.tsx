@@ -79,7 +79,7 @@ export const DoseTimeline: React.FC<DoseTimelineProps> = ({
 
         <div className="w-full h-[320px]">
           <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={data} margin={{ top: 10, right: 20, left: -10, bottom: 15 }}>
+            <ComposedChart data={data} margin={{ top: 10, right: 20, left: 10, bottom: 20 }}>
               <defs>
                 <linearGradient id="cyanGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.3} />
@@ -91,20 +91,20 @@ export const DoseTimeline: React.FC<DoseTimelineProps> = ({
 
               <XAxis
                 dataKey="day"
-                stroke="#9ca5b1"
+                stroke="#94a3b8"
                 fontSize={11}
                 fontFamily="IBM Plex Mono"
                 tickLine={false}
-                label={{ value: 'Days in space', position: 'insideBottom', offset: -10, fill: '#9ca5b1', fontSize: 11 }}
+                label={{ value: 'Days in space', position: 'insideBottom', offset: -10, fill: '#f8fafc', fontSize: 12, fontWeight: 500 }}
               />
 
               <YAxis
-                stroke="#9ca5b1"
+                stroke="#94a3b8"
                 fontSize={11}
                 fontFamily="IBM Plex Mono"
                 tickLine={false}
                 domain={[0, Math.ceil(maxDose / 50) * 50]}
-                label={{ value: 'Radiation Dose (mSv)', angle: -90, position: 'insideLeft', offset: 12, fill: '#9ca5b1', fontSize: 11 }}
+                label={{ value: 'Radiation Dose (mSv)', angle: -90, position: 'insideLeft', offset: 16, fill: '#f8fafc', fontSize: 12, fontWeight: 600 }}
               />
 
               <Tooltip

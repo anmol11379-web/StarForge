@@ -103,22 +103,22 @@ export const AdityaL1Panel: React.FC = () => {
               </div>
             ) : activeTab === 'protons' ? (
               <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart data={protonChartData} margin={{ top: 10, right: 20, left: -10, bottom: 15 }}>
+                <ComposedChart data={protonChartData} margin={{ top: 10, right: 20, left: 10, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#242f3d" vertical={false} />
                   <XAxis
                     dataKey="time"
-                    stroke="#9ca5b1"
+                    stroke="#94a3b8"
                     fontSize={10}
                     fontFamily="IBM Plex Mono"
                     tickLine={false}
-                    label={{ value: 'Timeline (UTC) · Historic May 2024 Solar Storm', position: 'insideBottom', offset: -10, fill: '#9ca5b1', fontSize: 11 }}
+                    label={{ value: 'Timeline (UTC) · Historic May 2024 Solar Storm', position: 'insideBottom', offset: -10, fill: '#f8fafc', fontSize: 11, fontWeight: 500 }}
                   />
                   <YAxis
-                    stroke="#9ca5b1"
+                    stroke="#94a3b8"
                     fontSize={11}
                     fontFamily="IBM Plex Mono"
                     tickLine={false}
-                    label={{ value: 'Speeding Protons (pfu)', angle: -90, position: 'insideLeft', offset: 12, fill: '#9ca5b1', fontSize: 11 }}
+                    label={{ value: 'Speeding Protons (pfu)', angle: -90, position: 'insideLeft', offset: 16, fill: '#f8fafc', fontSize: 12, fontWeight: 600 }}
                   />
                   <Tooltip
                     content={({ active, payload, label }) => {
@@ -143,22 +143,22 @@ export const AdityaL1Panel: React.FC = () => {
               </ResponsiveContainer>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <ComposedChart data={xrayChartData} margin={{ top: 10, right: 20, left: -10, bottom: 15 }}>
+                <ComposedChart data={xrayChartData} margin={{ top: 10, right: 20, left: 10, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#242f3d" vertical={false} />
                   <XAxis
                     dataKey="time"
-                    stroke="#9ca5b1"
+                    stroke="#94a3b8"
                     fontSize={10}
                     fontFamily="IBM Plex Mono"
                     tickLine={false}
-                    label={{ value: 'Timeline (UTC) · Solar Flare Eruptions', position: 'insideBottom', offset: -10, fill: '#9ca5b1', fontSize: 11 }}
+                    label={{ value: 'Timeline (UTC) · Solar Flare Eruptions', position: 'insideBottom', offset: -10, fill: '#f8fafc', fontSize: 11, fontWeight: 500 }}
                   />
                   <YAxis
-                    stroke="#9ca5b1"
+                    stroke="#94a3b8"
                     fontSize={11}
                     fontFamily="IBM Plex Mono"
                     tickLine={false}
-                    label={{ value: 'SoLEXS Counts/sec', angle: -90, position: 'insideLeft', offset: 12, fill: '#9ca5b1', fontSize: 11 }}
+                    label={{ value: 'SoLEXS Counts/sec', angle: -90, position: 'insideLeft', offset: 16, fill: '#f8fafc', fontSize: 12, fontWeight: 600 }}
                   />
                   <Tooltip
                     content={({ active, payload, label }) => {
