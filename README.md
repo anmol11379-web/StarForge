@@ -1,140 +1,118 @@
-# StarForge: AstroShield Mission Radiation Console
+# StarForge: AstroShield
 
-**ASTRA 2026 Hackathon - Domain 5: Moon, Mars and Deep-Space Exploration**
+A space radiation calculator that shows if astronauts are safe when traveling to the Moon and Mars.
 
-AstroShield is an interactive space mission planning console designed to estimate radiation exposure for astronauts traveling to the Moon, Mars, and deep space. It connects live space weather satellite observations from NOAA and ISRO Aditya-L1 to calculate safe flight durations and spaceship shield requirements under official NASA safety standards.
-
----
-
-## What This Project Does
-
-When humans leave Earth, they leave behind our planet's atmosphere and magnetic field, which act as a natural shield against harmful deep-space radiation. 
-
-In deep space, astronauts face two major radiation dangers:
-1. **Galactic Cosmic Rays (GCR):** A continuous, slow cosmic rain of atomic particles originating from ancient exploded stars across the galaxy. These particles hit the spaceship every day of the journey.
-2. **Solar Particle Events (SPE):** Unpredictable, explosive radiation storms ejected by the Sun. While infrequent, a single major solar storm can deliver a hazardous dose of radiation within 24 to 48 hours unless astronauts have a storm shelter.
-
-AstroShield answers three critical questions for any mission:
-- How much total radiation will the crew absorb during their mission?
-- Does that dose stay safely below NASA's lifetime career safety limit of 600 millisieverts (mSv)?
-- How much spaceship hull armor is needed to protect the crew during a solar storm?
+Built for the ASTRA 2026 Hackathon (Domain 5: Moon, Mars and Deep-Space Exploration).
 
 ---
 
-## How The Code Works
+## What is this project?
 
-StarForge is built as a complete client-server application. Here is how the project processes a mission calculation from start to finish:
+AstroShield is a website that helps space travelers stay safe. 
 
-### Step 1: Gathering Mission Parameters (Frontend)
-The user configures their mission through the web console:
-- **Destination:** Deep space transit to Mars, camping on Mars' surface, walking on the Moon, or high lunar orbit.
-- **Duration:** How many days the crew will spend in space (for example, 180 days for a standard one-way Mars flight).
-- **Crew Size:** Number of astronauts on board.
-- **Spaceship Shielding:** The wall thickness (areal density in g/cm²) and shield material (Aluminium, Hydrogen Plastic / HDPE, Water, or Moon/Mars soil).
-- **Sun Activity Cycle:** Whether the Sun is at minimum, moderate, or maximum activity in its 11-year cycle.
+On Earth, we have air and a natural magnetic shield that protects us from space danger. But once astronauts leave Earth and fly to the Moon or Mars, that protection is gone. 
 
-### Step 2: Live Space Weather Ingestion (Backend)
-The backend service contacts space agencies to gather live telemetry:
-- **NOAA GOES Satellites:** Measures real-time proton particles flying through space, planetary magnetic storm activity (Kp index), and solar X-ray flare brightness.
-- **ISRO Aditya-L1 Observatory:** Gathers observations from India's solar probe positioned at Lagrange Point 1 (1.5 million kilometers towards the Sun) using its ASPEX particle spectrometer and SoLEXS X-ray payload.
+Deep space is full of invisible radiation. If astronauts absorb too much of it, it can make them very sick. 
 
-### Step 3: Dose Calculation Engine (Backend Physics Model)
-The server runs an explainable physics engine calibrated against real robotic space missions:
-- **Baseline Rates:** Calibrated with data from NASA's Curiosity rover (MSL RAD) during its 253-day flight to Mars and surface stay, along with China's Chang'e-4 lunar lander.
-- **Shield Attenuation:** Calculates how much radiation penetrates different materials. Hydrogen-rich materials like plastic (HDPE) and water absorb deep-space rays smoothly, while standard aluminium can produce secondary particle scatter if too thick.
-- **Human Tissue Absorption:** Differentiates between raw instrument sensor clicks (Dose Equivalent, H) and what human organs actually absorb (Effective Dose, E) using NASA's 0.65 tissue-weighting conversion factor.
-
-### Step 4: Safety Assessment & Visualization (Frontend)
-The calculated dose is returned to the browser and visualized in real time:
-- An interactive mission timeline plots cumulative radiation day-by-day.
-- A risk gauge compares the mission dose against NASA's 600 mSv career limit and 250 mSv single-storm threshold.
-- Instant warnings alert the user if shielding is too thin or if a simulated solar storm exceeds safe parameters.
+AstroShield lets anyone plan a space mission and see:
+- How much radiation the astronauts will receive.
+- Whether the mission is safe under NASA's official health rules.
+- What spaceship shields (like plastic, water, or Moon dirt) work best to protect the crew.
 
 ---
 
-## Codebase Organization
+## Why space radiation is dangerous
 
-The repository is structured into two main parts:
+Space radiation comes from two main things:
 
-```
-StarForge/
-├── backend/                  # Python calculation engine and satellite APIs
-│   ├── app/
-│   │   ├── main.py           # FastAPI web application entry point
-│   │   ├── dose_engine.py    # Physics calculation logic and NASA limit checks
-│   │   ├── weather_service.py # Live NOAA SWPC & NASA DONKI satellite fetching
-│   │   ├── aditya_service.py # ISRO Aditya-L1 satellite data processing
-│   │   ├── constants.py      # Calibration constants and material densities
-│   │   └── schemas.py        # Data validation and request/response models
-│   ├── data/                 # Sample satellite datasets and cached fallbacks
-│   └── tests/                # Automated unit tests for calculation accuracy
-│
-├── frontend/                 # Interactive user interface
-│   ├── src/
-│   │   ├── App.tsx           # Main application dashboard and state coordinator
-│   │   ├── components/
-│   │   │   ├── MissionBuilder.tsx     # Mission configuration controls (Steps 1 & 2)
-│   │   │   ├── DoseTimeline.tsx       # Interactive dose timeline graph
-│   │   │   ├── RiskSummary.tsx        # NASA safety gauge and health impact cards
-│   │   │   ├── ShieldingComparison.tsx # Material performance comparison table
-│   │   │   ├── SpaceWeatherPanel.tsx  # Live satellite telemetry ticker
-│   │   │   ├── AdityaL1Panel.tsx      # ISRO Aditya-L1 vs NOAA GOES comparisons
-│   │   │   ├── StormScenarioModal.tsx # Solar Particle Event (SPE) simulator
-│   │   │   ├── SpaceIntroAnimation.tsx # 3D starfield intro sequence
-│   │   │   └── Navbar.tsx & Footer.tsx # Navigation and project metadata
-│   │   └── index.css         # Styling system and space telemetry design
-│   └── index.html            # Webpage entry point
-│
-├── README.md                 # Project documentation
-├── vercel.json               # Frontend deployment configuration
-└── render.yaml               # Backend cloud deployment configuration
-```
+1. **Everyday Deep Space Rays:** 
+   Tiny, super-fast particles coming from exploded stars far across the galaxy. They fly non-stop like invisible rain. Over a long trip to Mars, they slowly build up in the body.
+2. **Surprise Solar Storms:** 
+   Sudden, violent blasts thrown out by the Sun. They do not happen every day, but when they hit, they spray millions of dangerous particles in just a few hours. Astronauts need a storm bunker to survive them.
+
+NASA has a strict safety rule: an astronaut should never absorb more than 600 millisieverts (mSv) of radiation across their entire career. AstroShield checks this rule automatically.
 
 ---
 
-## Key Features
+## How the website works (in 3 simple steps)
 
-- **Interactive Mission Planner:** Adjust destination, flight days, crew count, and spaceship armor to immediately see how radiation levels change.
-- **Solar Storm Attack Simulator:** Test how an unexpected solar flare (such as the historic Halloween 2003 storm) impacts the crew, and verify if an onboard bunker blocks the blast.
-- **Live Space Weather Telemetry:** Real-time stream of proton counts, magnetic storm indices, and solar flare ratings from NOAA satellites.
-- **ISRO Aditya-L1 Integration:** Upstream solar observations from India's halo-orbit observatory cross-referenced with Earth-orbit satellites.
-- **Explainable Space Science:** Clear, jargon-free explanations explaining why certain materials work better and how space radiation behaves.
+### 1. You choose your mission
+On the website, you pick:
+- **Where you are going:** Flying to Mars, landing on Mars, walking on the Moon, or orbiting in space.
+- **How long you will stay:** For example, 180 days in space.
+- **Spaceship wall armor:** How thick the spaceship walls are, and what material they are made of (metal, special hydrogen plastic, water tanks, or local dirt).
+
+### 2. The code checks live satellite data
+While you pick your settings, the backend code connects to real space satellites:
+- **NOAA Weather Satellites:** Checks live space weather right now, including how many flying protons are in space and whether solar flares are active.
+- **ISRO Aditya-L1:** Checks solar observations sent from India's space probe orbiting 1.5 million kilometers out in deep space.
+
+### 3. The code calculates your crew's safety
+The code takes your trip days, wall thickness, and satellite data, and runs the math:
+- It shows your total radiation dose on a clear graph.
+- It displays a simple safety status: Safe, Warning, or Dangerous.
+- It lets you press a button to simulate a giant solar storm to see if your spaceship bunker holds up.
 
 ---
 
-## Running The Project Locally
+## What is inside this repository?
 
-If you would like to run this project on your computer, follow these simple steps:
+The project is split into two simple folders:
 
-### 1. Start the Backend
-Open a terminal in the project folder:
+### 1. frontend (The website you see and click on)
+This is built with React, TypeScript, and Tailwind CSS.
+- `src/App.tsx`: The main dashboard page that ties everything together.
+- `src/components/MissionBuilder.tsx`: The controls where you choose your destination, days, and spaceship armor.
+- `src/components/DoseTimeline.tsx`: The chart that draws your radiation buildup day-by-day.
+- `src/components/RiskSummary.tsx`: The score card that tells you if your crew passed NASA's safety limits.
+- `src/components/SpaceWeatherPanel.tsx`: The live box showing real-time satellite data from NOAA.
+- `src/components/AdityaL1Panel.tsx`: The screen showing solar measurements from India's Aditya-L1 satellite.
+- `src/components/StormScenarioModal.tsx`: The pop-up window where you can test what happens during a solar storm.
+- `src/components/SpaceIntroAnimation.tsx`: The 3D space starfield that plays when you first open the link.
+
+### 2. backend (The engine that does the math)
+This is built with Python and FastAPI.
+- `app/main.py`: The web server that receives your mission settings and sends back results.
+- `app/dose_engine.py`: The calculation code that figures out how much radiation gets through your spaceship walls based on real NASA Mars rover data.
+- `app/weather_service.py`: The code that talks to NOAA satellites to get live space weather.
+- `app/aditya_service.py`: The code that loads solar data from ISRO's Aditya-L1 spacecraft.
+- `app/constants.py`: Official numbers, including NASA safety limits and material densities.
+
+---
+
+## How to run it on your own computer
+
+You will need Python and Node.js installed.
+
+### Step 1: Start the backend server
+Open a terminal inside the project folder:
 ```bash
 cd backend
 pip install -r requirements.txt
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
-The backend API is now running at `http://127.0.0.1:8000`. You can test the endpoints at `http://127.0.0.1:8000/docs`.
+Your backend engine is now running at `http://127.0.0.1:8000`.
 
-### 2. Start the Frontend
+### Step 2: Start the frontend website
 Open a second terminal window:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-Open `http://127.0.0.1:5173` in your browser to view and interact with the AstroShield Mission Console.
+Open `http://127.0.0.1:5173` in your web browser. You can now use the AstroShield Mission Console!
 
 ---
 
-## Real-World Science Calibration
+## Where does the science come from?
 
-AstroShield uses empirical radiation measurements gathered by real robotic missions:
-- **Mars Science Laboratory (MSL RAD):** Measured 1.84 mSv/day during the 2012 Mars transit cruise (Zeitlin et al. 2013) and 0.64 mSv/day on the surface inside Curiosity (Hassler et al. 2014).
-- **Lunar Chang'e-4 Lander (LND):** Measured ~1.44 mSv/day on the lunar surface (Zhang et al. 2020).
-- **NASA Standard NASA-STD-3001:** Enforces a universal career limit of 600 mSv effective dose for all astronauts.
+The math in this project is based on real space missions:
+- **NASA Curiosity Rover (MSL RAD):** Carried a radiation sensor all the way to Mars in 2012, measuring exactly how much radiation hits a spaceship in deep space.
+- **China Chang'e-4 Moon Lander:** Measured real radiation levels on the surface of the Moon in 2019.
+- **NASA Standard 3001:** The official astronaut health standard that sets the 600 mSv career radiation ceiling.
 
 ---
 
-## Disclaimer
+## Simple Disclaimer
 
-AstroShield is an educational mission-planning tool and exploratory simulator. It uses first-order transport physics calibrated against published space agency datasets to demonstrate shielding concepts and mission trade-offs, and is not intended for flight-certified operational navigation.
+AstroShield is a learning and planning tool created for the ASTRA 2026 Hackathon. It uses real science and satellite numbers to show how spaceship shielding works in an easy-to-understand way.
