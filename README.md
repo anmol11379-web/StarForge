@@ -1,125 +1,145 @@
-# AstroShield: Mission Radiation Console 🛡️🚀
+# StarForge: AstroShield Mission Radiation Console
 
-**ASTRA 2026 Hackathon • Domain 5: Moon, Mars & Deep-Space Exploration**
+**ASTRA 2026 Hackathon - Domain 5: Moon, Mars and Deep-Space Exploration**
 
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite%20%2B%20TS-61DAFB.svg)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Theme-astroshield--eta-fc9f30.svg)](https://astroshield-eta.vercel.app)
 [![NASA-STD-3001](https://img.shields.io/badge/Standard-NASA--STD--3001%20Rev%20C-red.svg)](https://www.nasa.gov/)
 
-AstroShield is an explainable, physics-grounded mission planning console that estimates astronaut radiation dose across Lunar and Martian trajectories, ingests real-time space weather telemetry from NOAA SWPC and NASA DONKI, models emergency storm shelter dynamics during Solar Particle Events (SPE), and cross-compares upstream telemetry from ISRO's Aditya-L1 observatory at Lagrange Point 1.
+AstroShield is an interactive space mission planning console designed to estimate radiation exposure for astronauts traveling to the Moon, Mars, and deep space. It connects live space weather satellite observations from NOAA and ISRO Aditya-L1 to calculate safe flight durations and spaceship shield requirements under official NASA safety standards.
 
 ---
 
-## 🌌 What AstroShield Does · The Mission
+## What This Project Does
 
-> **Our Mission in One Simple Sentence:**  
-> *"We help keep astronauts safe from space radiation by showing how much they'll receive, when it's safest to fly, and how to shield their spaceship."*
+When humans leave Earth, they leave behind our planet's atmosphere and magnetic field, which act as a natural shield against harmful deep-space radiation. 
 
-When astronauts travel to the Moon or Mars, they get hit by harmful radiation from deep space. Out in space, Earth's magnetic field no longer protects them. This radiation comes from two sources:
-1. **Cosmic rays (GCR):** Always there, non-stop throughout the entire trip. Deep-space particles arriving from ancient exploded stars that slowly build up inside astronauts day by day.
-2. **Solar storms (SPE):** The Sun suddenly throws out giant explosive radiation bursts. They are unpredictable, and without a safe bunker to hide in, can make astronauts sick in hours.
+In deep space, astronauts face two major radiation dangers:
+1. **Galactic Cosmic Rays (GCR):** A continuous, slow cosmic rain of atomic particles originating from ancient exploded stars across the galaxy. These particles hit the spaceship every day of the journey.
+2. **Solar Particle Events (SPE):** Unpredictable, explosive radiation storms ejected by the Sun. While infrequent, a single major solar storm can deliver a hazardous dose of radiation within 24 to 48 hours unless astronauts have a storm shelter.
 
-### ❓ Three Questions Every Space Mission Must Answer
-Anyone planning a crewed space mission needs simple, trustworthy answers to three big questions:
-1. **How much radiation will the astronauts get?**  
-   *AstroShield's answer:* Enter your destination and days. We calculate total crew dose and check whether it stays safely below NASA's 600 mSv lifetime limit.
-2. **When is the safest time to fly?**  
-   *AstroShield's answer:* The Sun follows an 11-year cycle of quiet and stormy periods. We ingest live NOAA satellite feeds and Aditya-L1 observations to identify safe flight windows.
-3. **How thick should the storm shelter be?**  
-   *AstroShield's answer:* An interactive simulator tests plastic, water, Moon soil, and metal to show exactly how much armor is needed to block 90%+ of solar storm rays.
+AstroShield answers three critical questions for any mission:
+- How much total radiation will the crew absorb during their mission?
+- Does that dose stay safely below NASA's lifetime career safety limit of 600 millisieverts (mSv)?
+- How much spaceship hull armor is needed to protect the crew during a solar storm?
 
 ---
 
-## 🔬 Core Physics & Radiological Modeling
+## How The Code Works
 
-### 1. Dose Equivalent ($H$) vs Effective Dose ($E$)
-A crucial distinction in space radiobiology:
-- **Dose Equivalent ($H$, Sv / mSv):** The physical quantity measured by detectors like MSL RAD (integrating absorbed dose $D$ weighted by radiation quality factor $Q(L)$).
-- **Effective Dose ($E$, Sv / mSv):** The tissue-weighted quantity ($E = \sum w_T H_T$) defined by the ICRP to quantify stochastic health risk (cancer mortality).
-- **NASA's 600 mSv Career Limit is Effective Dose ($E$).** Dose equivalent cannot be directly compared to this limit without organ weighting.
-- **Conversion Ratio ($E/H \approx 0.65$):** MSL RAD mission synthesis (SFRP / Hassler et al.) reports:
-  - 180-day cruise: $\sim 0.33\text{ Sv}$ dose equivalent vs $\sim 0.22\text{ Sv}$ effective dose ($E/H \approx 0.667$).
-  - 600-day Mars surface stay: $\sim 0.38\text{ Sv}$ dose equivalent vs $\sim 0.24\text{ Sv}$ effective dose ($E/H \approx 0.632$).
-  - Full mission (300d surface): $\sim 0.85\text{ Sv}$ dose equivalent vs $\sim 0.56\text{ Sv}$ effective dose ($E/H \approx 0.659$).
-- AstroShield documents this conversion constant (`DOSE_EQUIVALENT_TO_EFFECTIVE_RATIO = 0.65`) and displays **both** numbers in the interface.
+StarForge is built as a complete client-server application. Here is how the project processes a mission calculation from start to finish:
 
-### 2. Saturated GCR Shielding & Aluminium Buildup
-Pure exponential attenuation is inadequate for GCR. NASA radiation transport studies demonstrate:
-$$\text{factor} = \text{floor} + (1 - \text{floor}) \cdot \exp(-x / \lambda) + \text{buildup}(x)$$
+### Step 1: Gathering Mission Parameters (Frontend)
+The user configures their mission through the web console:
+- **Destination:** Deep space transit to Mars, camping on Mars' surface, walking on the Moon, or high lunar orbit.
+- **Duration:** How many days the crew will spend in space (for example, 180 days for a standard one-way Mars flight).
+- **Crew Size:** Number of astronauts on board.
+- **Spaceship Shielding:** The wall thickness (areal density in g/cm²) and shield material (Aluminium, Hydrogen Plastic / HDPE, Water, or Moon/Mars soil).
+- **Sun Activity Cycle:** Whether the Sun is at minimum, moderate, or maximum activity in its 11-year cycle.
 
-- **Polyethylene (HDPE) & Water ($\text{H}_2\text{O}$):** Hydrogen-rich shields flatten cleanly towards a low floor ($\sim 0.42$) without secondary upturn because light nuclei stop protons via dense atomic electrons with minimal neutron fragmentation.
-- **Planetary Regolith:** Sits in between ($\text{floor} \approx 0.52$), making in-situ resource utilization (ISRU) surface berms effective without launch mass penalties.
-- **Aluminium (Al-6061):** Weakest shield per unit mass; bottoms out around $20\text{--}30\text{ g/cm}^2$ and subsequently exhibits a **secondary particle upturn** from neutron spallation and fragment buildup past $25\text{ g/cm}^2$.
+### Step 2: Live Space Weather Ingestion (Backend)
+The backend service contacts space agencies to gather live telemetry:
+- **NOAA GOES Satellites:** Measures real-time proton particles flying through space, planetary magnetic storm activity (Kp index), and solar X-ray flare brightness.
+- **ISRO Aditya-L1 Observatory:** Gathers observations from India's solar probe positioned at Lagrange Point 1 (1.5 million kilometers towards the Sun) using its ASPEX particle spectrometer and SoLEXS X-ray payload.
 
-### 3. Areal Density Input (Dropping "Al-Equivalent")
-A NASA study concluded that the common "aluminium-equivalent" approximation introduces large errors into the interior secondary particle spectra. AstroShield accepts the **physical areal density ($x$ in $\text{g/cm}^2$)** of the chosen material directly.
+### Step 3: Dose Calculation Engine (Backend Physics Model)
+The server runs an explainable physics engine calibrated against real robotic space missions:
+- **Baseline Rates:** Calibrated with data from NASA's Curiosity rover (MSL RAD) during its 253-day flight to Mars and surface stay, along with China's Chang'e-4 lunar lander.
+- **Shield Attenuation:** Calculates how much radiation penetrates different materials. Hydrogen-rich materials like plastic (HDPE) and water absorb deep-space rays smoothly, while standard aluminium can produce secondary particle scatter if too thick.
+- **Human Tissue Absorption:** Differentiates between raw instrument sensor clicks (Dose Equivalent, H) and what human organs actually absorb (Effective Dose, E) using NASA's 0.65 tissue-weighting conversion factor.
 
-### 4. Empirical Calibration Baselines
-- **Mars Transit:** $1.84 \pm 0.3\text{ mSv/day}$ dose equivalent ($1.20\text{ mSv/day}$ effective dose) measured by MSL RAD during its 253-day cruise near solar maximum (Zeitlin et al. 2013).
-- **Mars Surface:** $0.64 \pm 0.12\text{ mSv/day}$ dose equivalent ($0.42\text{ mSv/day}$ effective dose) measured by MSL RAD on Curiosity Rover (Hassler et al. 2014) behind $\sim 20\text{ g/cm}^2$ $\text{CO}_2$ atmosphere and $2\pi$ planetary body.
-- **Lunar Surface:** $\sim 60\ \mu\text{Sv/h} \approx 1.44\text{ mSv/day}$ dose equivalent measured inside the lander by Chang'e-4 LND (Zhang et al. 2020).
-- **SPE Calibration:** MSL RAD observed 3 SPE events during the 2012 cruise totaling $24.7\text{ mSv}$ (~5% of cruise dose); the largest single event delivered $19.5\text{ mSv}$ behind the spacecraft hull (Zeitlin et al. 2013).
-
-### 5. NASA Occupational Radiation Limits
-- **NASA-STD-3001 Vol 1 Rev C (Approved 15 Sept 2023):**
-  - **Universal Career Effective Limit:** $600\text{ mSv}$ effective dose (universal for all ages and sexes, corresponding to a 3% mean risk of cancer mortality for a 35-year-old female).
-  - **Short-term SPE Limit:** $250\text{ mSv}$ effective dose per event.
-  - **1-Year Ceiling:** $500\text{ mSv}$ effective dose.
-  - **30-Day Deterministic Limit:** $250\text{ mSv}$ (protects hematopoietic and central nervous systems).
+### Step 4: Safety Assessment & Visualization (Frontend)
+The calculated dose is returned to the browser and visualized in real time:
+- An interactive mission timeline plots cumulative radiation day-by-day.
+- A risk gauge compares the mission dose against NASA's 600 mSv career limit and 250 mSv single-storm threshold.
+- Instant warnings alert the user if shielding is too thin or if a simulated solar storm exceeds safe parameters.
 
 ---
 
-## 🛰️ Live & Preloaded Space Weather Feeds
+## Codebase Organization
 
-1. **NOAA SWPC:**
-   - Real-time GOES integral proton flux ($\ge 1, 5, 10, 30, 50, 60, 100, 500\text{ MeV}$).
-   - Exact NOAA S-Scale thresholds ($\ge 10\text{ MeV}$ proton flux): $S_1 \ge 10$, $S_2 \ge 100$, $S_3 \ge 1,000$, $S_4 \ge 10,000$, $S_5 \ge 100,000\text{ pfu}$.
-   - Planetary $K_p$ index and GOES $0.1\text{--}0.8\text{ nm}$ solar X-ray flux.
-2. **NASA DONKI:**
-   - Handled as **cached-first** to respect the 30 requests/hour limit on `DEMO_KEY`.
-3. **ISRO Aditya-L1 vs NOAA GOES:**
-   - Matched instrument-to-instrument:
-     - **ASPEX (STEPS):** Particle spectrometer compared with **GOES Proton Flux** (>10 MeV).
-     - **SoLEXS (2–22 keV):** Soft X-ray spectrometer compared with **GOES Solar X-Ray Flux** (0.1–0.8 nm) and flare class.
-   - Orbits: Lagrange Point 1 ($1.5 \times 10^6\text{ km}$ sunward) vs Geostationary ($35,786\text{ km}$).
-   - Source: Open access Zenodo dataset for ASPEX-STEPS Level-1a data (Jan–May 2024, AR3664 solar storm period) & ISSDC / PRADAN.
+The repository is structured into two main parts:
+
+```
+StarForge/
+├── backend/                  # Python calculation engine and satellite APIs
+│   ├── app/
+│   │   ├── main.py           # FastAPI web application entry point
+│   │   ├── dose_engine.py    # Physics calculation logic and NASA limit checks
+│   │   ├── weather_service.py # Live NOAA SWPC & NASA DONKI satellite fetching
+│   │   ├── aditya_service.py # ISRO Aditya-L1 satellite data processing
+│   │   ├── constants.py      # Calibration constants and material densities
+│   │   └── schemas.py        # Data validation and request/response models
+│   ├── data/                 # Sample satellite datasets and cached fallbacks
+│   └── tests/                # Automated unit tests for calculation accuracy
+│
+├── frontend/                 # Interactive user interface
+│   ├── src/
+│   │   ├── App.tsx           # Main application dashboard and state coordinator
+│   │   ├── components/
+│   │   │   ├── MissionBuilder.tsx     # Mission configuration controls (Steps 1 & 2)
+│   │   │   ├── DoseTimeline.tsx       # Interactive dose timeline graph
+│   │   │   ├── RiskSummary.tsx        # NASA safety gauge and health impact cards
+│   │   │   ├── ShieldingComparison.tsx # Material performance comparison table
+│   │   │   ├── SpaceWeatherPanel.tsx  # Live satellite telemetry ticker
+│   │   │   ├── AdityaL1Panel.tsx      # ISRO Aditya-L1 vs NOAA GOES comparisons
+│   │   │   ├── StormScenarioModal.tsx # Solar Particle Event (SPE) simulator
+│   │   │   ├── SpaceIntroAnimation.tsx # 3D starfield intro sequence
+│   │   │   └── Navbar.tsx & Footer.tsx # Navigation and project metadata
+│   │   └── index.css         # Styling system and space telemetry design
+│   └── index.html            # Webpage entry point
+│
+├── README.md                 # Project documentation
+├── vercel.json               # Frontend deployment configuration
+└── render.yaml               # Backend cloud deployment configuration
+```
 
 ---
 
-## 🚀 Quickstart & Local Execution
+## Key Features
 
-### 1. Backend Setup
+- **Interactive Mission Planner:** Adjust destination, flight days, crew count, and spaceship armor to immediately see how radiation levels change.
+- **Solar Storm Attack Simulator:** Test how an unexpected solar flare (such as the historic Halloween 2003 storm) impacts the crew, and verify if an onboard bunker blocks the blast.
+- **Live Space Weather Telemetry:** Real-time stream of proton counts, magnetic storm indices, and solar flare ratings from NOAA satellites.
+- **ISRO Aditya-L1 Integration:** Upstream solar observations from India's halo-orbit observatory cross-referenced with Earth-orbit satellites.
+- **Explainable Space Science:** Clear, jargon-free explanations explaining why certain materials work better and how space radiation behaves.
+
+---
+
+## Running The Project Locally
+
+If you would like to run this project on your computer, follow these simple steps:
+
+### 1. Start the Backend
+Open a terminal in the project folder:
 ```bash
 cd backend
 pip install -r requirements.txt
-pytest tests/
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
-- API Docs: `http://localhost:8000/docs`
-- Health: `http://localhost:8000/health`
+The backend API is now running at `http://127.0.0.1:8000`. You can test the endpoints at `http://127.0.0.1:8000/docs`.
 
-### 2. Frontend Setup
+### 2. Start the Frontend
+Open a second terminal window:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-- Console UI: `http://localhost:5173`
+Open `http://127.0.0.1:5173` in your browser to view and interact with the AstroShield Mission Console.
 
 ---
 
-## 📚 Peer-Reviewed Citations & References
+## Real-World Science Calibration
 
-1. **Zeitlin, C. et al. (2013).** *Measurements of Energetic Particle Radiation in Transit to Mars on the Mars Science Laboratory.* **Science**, 340(6136), 1080–1084.
-2. **Hassler, D. M. et al. (2014).** *Mars' Surface Radiation Environment Measured with the Mars Science Laboratory's Curiosity Rover.* **Science**, 343(6169), 1244797.
-3. **Zhang, S. et al. (2020).** *First measurements of the radiation dose on the lunar surface.* **Science Advances**, 6(39), eaaz1334 (doi:10.1126/sciadv.aaz1334).
-4. **NASA (2023).** *NASA Space Flight Human-System Standard, Volume 1, Revision C: Crew Health.* NASA-STD-3001 (Approved Sept 15, 2023).
-5. **Durante, M. (2014).** *Space radiation hazards and mitigation.* **Life Sciences in Space Research**, 1, 2–17.
-6. **Zenodo / ISSDC:** Aditya-L1 ASPEX-STEPS Level-1a open dataset (May 2024 active region AR3664 storm sequence) & ISRO PRADAN.
+AstroShield uses empirical radiation measurements gathered by real robotic missions:
+- **Mars Science Laboratory (MSL RAD):** Measured 1.84 mSv/day during the 2012 Mars transit cruise (Zeitlin et al. 2013) and 0.64 mSv/day on the surface inside Curiosity (Hassler et al. 2014).
+- **Lunar Chang'e-4 Lander (LND):** Measured ~1.44 mSv/day on the lunar surface (Zhang et al. 2020).
+- **NASA Standard NASA-STD-3001:** Enforces a universal career limit of 600 mSv effective dose for all astronauts.
 
 ---
 
-## ⚠️ Limitations & Disclaimer
-*AstroShield is a transparent mission-planning estimator and educational console, not medical-grade or flight-certified dosimetry. It employs first-order transport approximations calibrated against robotic landers and rovers. The "aluminium-equivalent" approximation has been discarded in favor of physical material areal densities per NASA transport recommendations.*
+## Disclaimer
+
+AstroShield is an educational mission-planning tool and exploratory simulator. It uses first-order transport physics calibrated against published space agency datasets to demonstrate shielding concepts and mission trade-offs, and is not intended for flight-certified operational navigation.
