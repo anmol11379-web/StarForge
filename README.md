@@ -109,7 +109,7 @@ Open `http://127.0.0.1:5173` in your web browser. You can now use the AstroShiel
 
 ---
 
-## Where does the science come from??
+## Where does the science come from?
 
 The math in this project is based on real space missions:
 - **NASA Curiosity Rover (MSL RAD):** Carried a radiation sensor all the way to Mars in 2012, measuring exactly how much radiation hits a spaceship in deep space.
