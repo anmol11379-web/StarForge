@@ -2,11 +2,6 @@
 
 **ASTRA 2026 Hackathon - Domain 5: Moon, Mars and Deep-Space Exploration**
 
-[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite%20%2B%20TS-61DAFB.svg)](https://react.dev/)
-[![NASA-STD-3001](https://img.shields.io/badge/Standard-NASA--STD--3001%20Rev%20C-red.svg)](https://www.nasa.gov/)
-
 AstroShield is an interactive space mission planning console designed to estimate radiation exposure for astronauts traveling to the Moon, Mars, and deep space. It connects live space weather satellite observations from NOAA and ISRO Aditya-L1 to calculate safe flight durations and spaceship shield requirements under official NASA safety standards.
 
 ---
