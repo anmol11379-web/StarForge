@@ -39,7 +39,7 @@ NASA has a strict safety rule: an astronaut should never absorb more than 600 mi
 
 ---
 
-## How the website works (in 3 simple steps)
+## How the website works 
 
 ### 1. You choose your mission
 On the website, you pick:
