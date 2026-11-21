@@ -4,6 +4,11 @@ A space radiation calculator that shows if astronauts are safe when traveling to
 
 Built for the ASTRA 2026 Hackathon (Domain 5: Moon, Mars and Deep-Space Exploration).
 
+### Live Links
+- Live Website: https://starforge-astro-shield.netlify.app/
+- Live Backend API: https://starforge-us48.onrender.com/
+- Interactive API Docs: https://starforge-us48.onrender.com/docs
+
 ---
 
 ## What is this project?
