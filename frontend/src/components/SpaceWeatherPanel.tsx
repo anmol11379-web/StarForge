@@ -151,7 +151,7 @@ export const SpaceWeatherPanel: React.FC<SpaceWeatherPanelProps> = ({ weather, l
             <Sun className="size-4 text-primary" />
           </dt>
           <dd className="mt-3 flex items-baseline gap-2">
-            <span className="font-mono text-2xl sm:text-3xl font-medium tracking-tight text-primary">
+            <span className="font-mono text-2xl sm:text-3xl font-medium tracking-tight text-foreground">
               {weather?.flare_class || 'C1.2'}
             </span>
             <span className="font-mono text-xs text-muted-foreground">flare size</span>
