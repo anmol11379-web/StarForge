@@ -1,0 +1,47 @@
+{
+  "source": "ISRO / ISSDC & Zenodo Open Access",
+  "satellite": "Aditya-L1",
+  "orbit": "Sun-Earth Halo Orbit around Lagrange Point 1 (~1.5M km sunward)",
+  "comparison_target": "NOAA GOES-16 (Earth Geostationary Orbit 35,786 km)",
+  "is_preloaded": true,
+  "label": "PRELOADED ZENODO / ISSDC SAMPLE",
+  "reference_event": "Solar Active Region AR3664 Severe Storm Sequence (May 2024)",
+  "citations": [
+    "Aditya-L1 ASPEX-STEPS Level-1a open dataset (Jan-May 2024, Zenodo)",
+    "ISRO Indian Space Science Data Centre (ISSDC / PRADAN)"
+  ],
+  "description": "Instruments are matched to their correct counterparts: ASPEX (STEPS) particle spectrometer is cross-compared with GOES proton flux; SoLEXS (2-22 keV) soft X-ray spectrometer is cross-compared with GOES X-ray flux.",
+  "timestamp_range": "2024-05-10 00:00 UTC to 2024-05-12 12:00 UTC",
+  "aspex_proton_datapoints": [
+    {"timestamp": "2024-05-10T00:00:00Z", "aspex_steps_flux": 4.2, "noaa_goes_proton_flux": 3.8, "solar_wind_speed_kms": 390},
+    {"timestamp": "2024-05-10T04:00:00Z", "aspex_steps_flux": 6.8, "noaa_goes_proton_flux": 5.9, "solar_wind_speed_kms": 415},
+    {"timestamp": "2024-05-10T08:00:00Z", "aspex_steps_flux": 18.5, "noaa_goes_proton_flux": 15.2, "solar_wind_speed_kms": 470},
+    {"timestamp": "2024-05-10T12:00:00Z", "aspex_steps_flux": 45.0, "noaa_goes_proton_flux": 38.4, "solar_wind_speed_kms": 540},
+    {"timestamp": "2024-05-10T16:00:00Z", "aspex_steps_flux": 112.0, "noaa_goes_proton_flux": 98.7, "solar_wind_speed_kms": 680},
+    {"timestamp": "2024-05-10T20:00:00Z", "aspex_steps_flux": 230.0, "noaa_goes_proton_flux": 205.0, "solar_wind_speed_kms": 790},
+    {"timestamp": "2024-05-11T00:00:00Z", "aspex_steps_flux": 420.0, "noaa_goes_proton_flux": 385.0, "solar_wind_speed_kms": 860},
+    {"timestamp": "2024-05-11T04:00:00Z", "aspex_steps_flux": 380.0, "noaa_goes_proton_flux": 340.0, "solar_wind_speed_kms": 820},
+    {"timestamp": "2024-05-11T08:00:00Z", "aspex_steps_flux": 260.0, "noaa_goes_proton_flux": 235.0, "solar_wind_speed_kms": 750},
+    {"timestamp": "2024-05-11T12:00:00Z", "aspex_steps_flux": 175.0, "noaa_goes_proton_flux": 160.0, "solar_wind_speed_kms": 690},
+    {"timestamp": "2024-05-11T18:00:00Z", "aspex_steps_flux": 95.0, "noaa_goes_proton_flux": 88.0, "solar_wind_speed_kms": 610},
+    {"timestamp": "2024-05-12T00:00:00Z", "aspex_steps_flux": 48.0, "noaa_goes_proton_flux": 42.0, "solar_wind_speed_kms": 540},
+    {"timestamp": "2024-05-12T06:00:00Z", "aspex_steps_flux": 22.0, "noaa_goes_proton_flux": 19.5, "solar_wind_speed_kms": 480},
+    {"timestamp": "2024-05-12T12:00:00Z", "aspex_steps_flux": 9.5, "noaa_goes_proton_flux": 8.2, "solar_wind_speed_kms": 440}
+  ],
+  "solexs_xray_datapoints": [
+    {"timestamp": "2024-05-10T00:00:00Z", "solexs_counts_sec": 1240, "noaa_goes_xray_flux": 1.2e-5, "flare_class": "M1.2"},
+    {"timestamp": "2024-05-10T04:00:00Z", "solexs_counts_sec": 2480, "noaa_goes_xray_flux": 2.4e-5, "flare_class": "M2.4"},
+    {"timestamp": "2024-05-10T08:00:00Z", "solexs_counts_sec": 8900, "noaa_goes_xray_flux": 8.7e-5, "flare_class": "M8.7"},
+    {"timestamp": "2024-05-10T12:00:00Z", "solexs_counts_sec": 31500, "noaa_goes_xray_flux": 3.1e-4, "flare_class": "X3.1"},
+    {"timestamp": "2024-05-10T16:00:00Z", "solexs_counts_sec": 86200, "noaa_goes_xray_flux": 8.5e-4, "flare_class": "X8.5"},
+    {"timestamp": "2024-05-10T20:00:00Z", "solexs_counts_sec": 142000, "noaa_goes_xray_flux": 1.4e-3, "flare_class": "X14"},
+    {"timestamp": "2024-05-11T00:00:00Z", "solexs_counts_sec": 195000, "noaa_goes_xray_flux": 1.9e-3, "flare_class": "X19"},
+    {"timestamp": "2024-05-11T04:00:00Z", "solexs_counts_sec": 92000, "noaa_goes_xray_flux": 9.2e-4, "flare_class": "X9.2"},
+    {"timestamp": "2024-05-11T08:00:00Z", "solexs_counts_sec": 41000, "noaa_goes_xray_flux": 4.1e-4, "flare_class": "X4.1"},
+    {"timestamp": "2024-05-11T12:00:00Z", "solexs_counts_sec": 18200, "noaa_goes_xray_flux": 1.8e-4, "flare_class": "X1.8"},
+    {"timestamp": "2024-05-11T18:00:00Z", "solexs_counts_sec": 7200, "noaa_goes_xray_flux": 7.2e-5, "flare_class": "M7.2"},
+    {"timestamp": "2024-05-12T00:00:00Z", "solexs_counts_sec": 3500, "noaa_goes_xray_flux": 3.5e-5, "flare_class": "M3.5"},
+    {"timestamp": "2024-05-12T06:00:00Z", "solexs_counts_sec": 1500, "noaa_goes_xray_flux": 1.5e-5, "flare_class": "M1.5"},
+    {"timestamp": "2024-05-12T12:00:00Z", "solexs_counts_sec": 820, "noaa_goes_xray_flux": 8.0e-6, "flare_class": "C8.0"}
+  ]
+}

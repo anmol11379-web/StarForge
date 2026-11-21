@@ -1,0 +1,357 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 17px;
+    scroll-behavior: smooth !important;
+    scroll-padding-top: 5rem;
+  }
+
+  :root {
+    color-scheme: dark;
+    --background: #030712;
+    --foreground: #f8fafc;
+    --card: #080f1d;
+    --card-foreground: #f8fafc;
+    --popover: #080f1d;
+    --popover-foreground: #f8fafc;
+    --primary: #0ea5e9;
+    --primary-foreground: #030712;
+    --secondary: #0f172a;
+    --secondary-foreground: #f8fafc;
+    --muted: #0f172a;
+    --muted-foreground: #94a3b8;
+    --accent: #14b8a6;
+    --accent-foreground: #030712;
+    --signal: #38bdf8;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: #0ea5e9;
+    --chart-1: #38bdf8;
+    --chart-2: #818cf8;
+    --radius: 0px;
+  }
+
+  /* Sharp rectangular borders across all cards, containers, buttons, and inputs */
+  button, input, select, textarea, [role="dialog"], .rounded, .rounded-sm, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl, .border {
+    border-radius: 0px !important;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.015em;
+  }
+
+  .font-mono {
+    font-family: 'Orbitron', 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  }
+
+  /* Kicker / Eyebrow labels across the entire website with futuristic space font & moving glitch */
+  [class*="tracking-[0.2em]"],
+  [class*="tracking-widest"],
+  [class*="tracking-wider"] {
+    font-family: 'Orbitron', 'IBM Plex Mono', monospace !important;
+    letter-spacing: 0.18em;
+  }
+
+  [class*="tracking-[0.2em]"],
+  [class*="tracking-widest"] {
+    animation: kicker-glitch 4.2s infinite ease-in-out;
+    display: inline-block;
+  }
+
+  /* Space HUD / Telemetry Primary Button & Element Styles */
+  .bg-primary {
+    background-color: #38bdf8 !important;
+    color: #030712 !important;
+    border-color: #38bdf8 !important;
+  }
+  .bg-primary:hover {
+    background-color: #7dd3fc !important;
+  }
+  .text-primary {
+    color: #38bdf8 !important;
+  }
+  .border-primary {
+    border-color: #0ea5e9 !important;
+  }
+}
+
+/* Telemetry Blinking Beacon */
+@keyframes live-blink {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px rgba(45, 212, 191, 0.95)) drop-shadow(0 0 10px rgba(56, 189, 248, 0.7));
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(0.75);
+    filter: none;
+  }
+}
+
+.animate-blink {
+  animation: live-blink 1.05s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ========================================================= */
+/* SPACE HUD TARGET RETICLE CORNER BRACKETS (NO REFLECTIONS) */
+/* ========================================================= */
+button,
+a[href^="#calculator"],
+a[href^="#how"] {
+  position: relative;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Corner Reticle Brackets using top-left and bottom-right accents */
+button::before,
+a[href^="#calculator"]::before,
+a[href^="#how"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+button::after,
+a[href^="#calculator"]::after,
+a[href^="#how"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 5px;
+  height: 5px;
+  border-bottom: 2px solid transparent;
+  border-right: 2px solid transparent;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Target Lock: Corner Brackets Expand In & Border Highlights */
+button:hover:not(:disabled)::before,
+a[href^="#calculator"]:hover::before,
+a[href^="#how"]:hover::before {
+  border-top-color: #38bdf8;
+  border-left-color: #38bdf8;
+  width: 10px;
+  height: 10px;
+}
+
+button:hover:not(:disabled)::after,
+a[href^="#calculator"]:hover::after,
+a[href^="#how"]:hover::after {
+  border-bottom-color: #38bdf8;
+  border-right-color: #38bdf8;
+  width: 10px;
+  height: 10px;
+}
+
+button:hover:not(:disabled),
+a[href^="#calculator"]:hover,
+a[href^="#how"]:hover {
+  border-color: #38bdf8 !important;
+  letter-spacing: 0.025em;
+}
+
+/* Secondary Button clean fill on hover */
+button[class*="bg-[#0c1e38]"]:hover,
+a[href^="#how"]:hover {
+  background-color: #122847 !important;
+}
+
+/* Primary Cyan Action Buttons clean tone boost on hover */
+a[href^="#calculator"]:hover,
+[class*="from-sky-400"]:hover,
+button.bg-primary:hover {
+  filter: brightness(1.12);
+}
+
+/* ========================================================= */
+/* ZERO-G ORBITAL FLOAT & SMOOTH MOVEMENT ANIMATIONS         */
+/* ========================================================= */
+@keyframes zero-g-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+}
+
+@keyframes hero-space-drift {
+  0%, 100% {
+    transform: scale(1.02) translate(0px, 0px);
+  }
+  50% {
+    transform: scale(1.04) translate(-10px, -6px);
+  }
+}
+
+.animate-logo-float {
+  animation: zero-g-float 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-space-drift {
+  animation: hero-space-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #030712;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0ea5e9;
+}
+
+/* ========================================================= */
+/* GLITCHY MOVING TEXT SYSTEM (Hero Deep Space Headline)     */
+/* ========================================================= */
+.glitch-base-text {
+  font-family: 'Megrim', 'Wallpoet', 'Orbitron', 'Space Grotesk', sans-serif !important;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+  font-weight: 400 !important;
+  line-height: 1.15;
+}
+
+.glitch-wrapper {
+  animation: glitch-jitter 3.2s infinite ease-in-out;
+  display: inline-block;
+  position: relative;
+}
+
+.glitch-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Megrim', 'Wallpoet', 'Orbitron', 'Space Grotesk', sans-serif !important;
+  letter-spacing: 0.04em;
+  font-weight: 400 !important;
+  line-height: 1.15;
+  user-select: none;
+  pointer-events: none;
+}
+
+.glitch-layer-cyan {
+  color: #38bdf8;
+  clip-path: polygon(0 15%, 100% 15%, 100% 38%, 0 38%);
+  animation: glitch-slice-cyan 2.2s infinite steps(2, jump-none) alternate-reverse;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+.glitch-layer-magenta {
+  color: #f43f5e;
+  clip-path: polygon(0 62%, 100% 62%, 100% 82%, 0 82%);
+  animation: glitch-slice-magenta 2.8s infinite steps(2, jump-none) alternate-reverse;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+@keyframes glitch-jitter {
+  0%, 100% {
+    transform: none;
+  }
+  88% {
+    transform: none;
+  }
+  89% {
+    transform: skew(-2deg, 0.8deg) translate(-3px, 1px);
+  }
+  90.5% {
+    transform: skew(2deg, -0.8deg) translate(3px, -1px);
+  }
+  92% {
+    transform: none;
+  }
+  95% {
+    transform: skew(1deg, 0deg) translate(1.5px, 0);
+  }
+  96.5% {
+    transform: none;
+  }
+}
+
+@keyframes glitch-slice-cyan {
+  0% {
+    clip-path: polygon(0 8%, 100% 8%, 100% 25%, 0 25%);
+    transform: translate(-4px, -1px);
+  }
+  20% {
+    clip-path: polygon(0 42%, 100% 42%, 100% 58%, 0 58%);
+    transform: translate(4px, 1px);
+  }
+  40% {
+    clip-path: polygon(0 72%, 100% 72%, 100% 88%, 0 88%);
+    transform: translate(-3px, 0);
+  }
+  60% {
+    clip-path: polygon(0 20%, 100% 20%, 100% 36%, 0 36%);
+    transform: translate(3px, -1px);
+  }
+  80% {
+    clip-path: polygon(0 58%, 100% 58%, 100% 74%, 0 74%);
+    transform: translate(-4px, 1px);
+  }
+  100% {
+    clip-path: polygon(0 4%, 100% 4%, 100% 18%, 0 18%);
+    transform: translate(2px, -1px);
+  }
+}
+
+@keyframes glitch-slice-magenta {
+  0% {
+    clip-path: polygon(0 62%, 100% 62%, 100% 80%, 0 80%);
+    transform: translate(4px, 1px);
+  }
+  25% {
+    clip-path: polygon(0 14%, 100% 14%, 100% 30%, 0 30%);
+    transform: translate(-4px, -1px);
+  }
+  50% {
+    clip-path: polygon(0 78%, 100% 78%, 100% 94%, 0 94%);
+    transform: translate(3px, 0);
+  }
+  75% {
+    clip-path: polygon(0 32%, 100% 32%, 100% 48%, 0 48%);
+    transform: translate(-3px, 1px);
+  }
+  100% {
+    clip-path: polygon(0 48%, 100% 48%, 100% 64%, 0 64%);
+    transform: translate(4px, -1px);
+  }
+}

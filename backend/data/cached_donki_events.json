@@ -1,0 +1,17 @@
+[
+  {
+    "sepID": "2024-05-11T02:15:00-SEP-001",
+    "eventTime": "2024-05-11T02:15Z",
+    "instruments": [{"displayName": "GOES-16: EPS"}, {"displayName": "SOHO: COSTEP"}],
+    "linkedEvents": [{"activityID": "2024-05-11T01:23:00-FLR-001"}],
+    "notes": "Associated with major flare from active region AR3664. Proton flux exceeded 100 pfu (S2/S3 event)."
+  },
+  {
+    "sepID": "2024-03-23T23:00:00-SEP-001",
+    "eventTime": "2024-03-23T23:00Z",
+    "instruments": [{"displayName": "GOES-18: EPS"}],
+    "linkedEvents": [{"activityID": "2024-03-23T22:15:00-FLR-001"}],
+    "notes": "Coronal mass ejection driven shock accelerating protons into interplanetary medium."
+  }
+]
+
